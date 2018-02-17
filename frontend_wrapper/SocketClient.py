@@ -87,6 +87,11 @@ class SocketClient():
         self.new_sending_thread()
         self.new_ws4py_instance()
 
+        self.bot_wrapper = None
+
+    def set_bot_wrapper(self, bot_wrapper):
+        self.bot_wrapper = bot_wrapper
+
     def new_sending_thread(self):
         with self.sending_thread_lock:
             self.unsafe_new_sending_thread()
@@ -105,6 +110,7 @@ class SocketClient():
         self.sending_thread.daemon = True
         self.sending_thread.start()
 
+    # client reconnects automatically by this function
     def on_disconnect(self, code, reason):
         if code !=SocketClient.requested_close_code:
             self.reset_connection()
@@ -161,18 +167,20 @@ class SocketClient():
                 self.sending_thread.join()
                 self.stop_sending_thread_flag = False
 
-
     def on_message(self, message):
         message_json = json.loads(message.data.decode("utf-8"))
         l.log("SocketClient received {} {}".format(type(message_json), message_json))
+        self.bot_wrapper.on_json_from_server(message_json)
 
     def send(self, message):
         self.send_in_future(message)
 
     def send_in_future(self, message):
-        if not self.is_connected():
-            raise Exception("Connect client first")
-        self.messages_to_send.append(message)
+        # wait for reconnect
+        with self.reset_connection_lock:
+            if not self.is_connected():
+                raise Exception("Connect client first")
+            self.messages_to_send.append(message)
 
     def send_queued(self):
         with self.send_queued_lock:
