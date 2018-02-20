@@ -1,2 +1,4 @@
 ws4py==0.4.3
 wsaccel==0.6.2
+flask==0.12.2
+flask-cors==3.0.3
