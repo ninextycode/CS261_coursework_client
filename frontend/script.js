@@ -1,6 +1,7 @@
 var port = 5000
 var address = "http://localhost"
 var url = address + ":" + port
+var notification_period_ms = 10000
 
 
 $("#send_button").click(onSendButtonPressed);
@@ -25,11 +26,23 @@ function on_response(response) {
 
 function send_to_server(message) {
     message_json = {type: "message", data: message};
-    console.log("sending ", message_json, " to ", url);
-
-    $.get(url, message_json, on_response)
+    send_json(message_json);
 }
 
 function request_notifications() {
-    $.get(url, {type: "notifications_request"}, on_response)
+    message_json = {type: "notifications_request"};
+    send_json(message_json);
 }
+
+function send_json(message_json) {
+    console.log("sending ", message_json, " to ", url);
+    $.get(url, message_json, on_response)
+
+}
+
+function request_notifications_recurrent() {
+    request_notifications()
+    setTimeout(request_notifications_recurrent, notification_period_ms)
+}
+
+request_notifications_recurrent()

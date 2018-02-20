@@ -53,7 +53,7 @@ class Ws4pyClient(tc.WebSocketClient):
         self.message_callback(m)
 
 
-class SocketClient():
+class SocketClient:
     requested_close_code = 1000
     instance = None
     main_lock = threading.Lock()

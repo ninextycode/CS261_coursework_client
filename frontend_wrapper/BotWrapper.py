@@ -1,6 +1,7 @@
 import frontend_wrapper.Log as l
 import json
 
+
 class BotWrapper:
     instance = None
 
