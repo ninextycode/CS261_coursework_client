@@ -1,6 +1,6 @@
 try:
     import wsaccel
-except ModuleNotFoundError:
+except ImportError:
     print("No wsaccel module")
 import ws4py.client.threadedclient as tc
 
