@@ -1,14 +1,23 @@
-import wsaccel
-import time
+try:
+    import wsaccel
+except ModuleNotFoundError:
+    print("No wsaccel module")
 import ws4py.client.threadedclient as tc
+
+import time
 import json
 import threading
 
 import frontend_wrapper.Log as l
+import frontend_wrapper.Singleton as sn
 import config
 
 
-wsaccel.patch_ws4py()
+if wsaccel is not None:
+    wsaccel.patch_ws4py()
+
+
+ws4py_logger = l.Logger("Ws4pyClient")
 
 
 class Ws4pyClient(tc.WebSocketClient):
@@ -29,21 +38,21 @@ class Ws4pyClient(tc.WebSocketClient):
         self.connected = val
 
     def connect(self):
-        l.log("Connecting to {}".format(self.url))
+        ws4py_logger.log("Connecting to {}".format(self.url))
         try:
             super().connect()
             self.set_connected(True)
             return True
         except Exception as e:
             self.set_connected(False)
-            l.log("Exception on connect: ", e)
+            ws4py_logger.log("Exception on connect: ", e)
             return False
 
     def opened(self):
         pass
 
     def closed(self, code, reason=None):
-        l.log("Closed, code: {}, reason: {}".format(code, reason))
+        ws4py_logger.log("Closed, code: {}, reason: {}".format(code, reason))
 
         self.set_connected(False)
         if self.disconnect_callback is not None:
@@ -53,21 +62,20 @@ class Ws4pyClient(tc.WebSocketClient):
         self.message_callback(m)
 
 
-class SocketClient:
+sc_logger = l.Logger("SocketClient")
+
+
+class SocketClient(sn.Singleton):
     requested_close_code = 1000
-    instance = None
     main_lock = threading.Lock()
     wait_reconnect_s = 1
 
-    @staticmethod
-    def get_instance():
-        if SocketClient.instance is None:
-            with SocketClient.main_lock:
-                if SocketClient.instance is None:
-                    SocketClient.instance = SocketClient()
-        return SocketClient.instance
+    def set_bot_wrapper(self, bot_wrapper):
+        self.bot_wrapper = bot_wrapper
 
     def __init__(self, url=config.server_url):
+        self.bot_wrapper = None
+
         self.reconnect_lock = threading.Lock()
         self.recreate_ws4py_lock = threading.Lock()
         self.close_lock = threading.Lock()
@@ -86,11 +94,6 @@ class SocketClient:
 
         self.new_sending_thread()
         self.new_ws4py_instance()
-
-        self.bot_wrapper = None
-
-    def set_bot_wrapper(self, bot_wrapper):
-        self.bot_wrapper = bot_wrapper
 
     def new_sending_thread(self):
         with self.sending_thread_lock:
@@ -115,6 +118,9 @@ class SocketClient:
         if code !=SocketClient.requested_close_code:
             self.reset_connection()
 
+    def connect(self):
+        self.reset_connection()
+
     def reset_connection(self):
         with self.reset_connection_lock:
             self.new_ws4py_instance()
@@ -133,7 +139,7 @@ class SocketClient:
             self.ws4py_client.connect()
 
         while not self.is_connected():
-            l.log("Reconnect to {} in {} seconds".format(self.url, SocketClient.wait_reconnect_s))
+            sc_logger.log("Reconnect to {} in {} seconds".format(self.url, SocketClient.wait_reconnect_s))
             time.sleep(SocketClient.wait_reconnect_s)
 
             with self.reconnect_lock:
@@ -169,7 +175,7 @@ class SocketClient:
 
     def on_message(self, message):
         message_json = json.loads(message.data.decode("utf-8"))
-        l.log("SocketClient received {} {}".format(type(message_json), message_json))
+        sc_logger.log("SocketClient received {} {}".format(type(message_json), message_json))
         self.bot_wrapper.on_json_from_server(message_json)
 
     def send(self, message):
@@ -186,7 +192,7 @@ class SocketClient:
         with self.send_queued_lock:
             for m in self.messages_to_send:
                 self.unsafe_send(m)
-                l.log("SocketClient sent {} {}".format(type(m), m))
+                sc_logger.log("SocketClient sent {} {}".format(type(m), m))
             self.messages_to_send = []
 
     def unsafe_send(self, message):
