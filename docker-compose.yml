@@ -17,6 +17,9 @@ services:
     networks:
       - dockernet
 
+    environment:
+      IS_IN_DOCKER: 'true'
+
 networks:
   dockernet:
       external: true

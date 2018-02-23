@@ -8,7 +8,7 @@ import time
 
 import frontend_wrapper.Log as l
 import frontend_wrapper.singleton as sn
-
+import config
 
 
 logger = l.Logger("PageBot")
@@ -95,5 +95,8 @@ class PageBot(sn.Singleton):
             logger.log("Response: {}".format(response))
             return response
 
-        flask_thread = threading.Thread(target=app.run)
+        def run_app():
+            app.run(host=config.frontend_host, port=config.frontend_port)
+
+        flask_thread = threading.Thread(target=run_app)
         flask_thread.start()
