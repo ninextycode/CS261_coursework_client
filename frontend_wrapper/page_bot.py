@@ -7,7 +7,7 @@ import threading
 import time
 
 import frontend_wrapper.Log as l
-import frontend_wrapper.Singleton as sn
+import frontend_wrapper.singleton as sn
 
 
 

@@ -5,8 +5,8 @@ var  recorder;
 var  chunks;
 var  audioOptions =  {
     tag: 'audio',
-    type: 'audio/flac',
-    ext: '.flac'
+    type: 'audio/ogg',
+    ext: '.ogg'
 };
 
 var start_audio_text = "Record"

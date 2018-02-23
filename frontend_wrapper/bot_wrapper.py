@@ -1,6 +1,6 @@
 import json
 
-import frontend_wrapper.Singleton as sn
+import frontend_wrapper.singleton as sn
 import frontend_wrapper.Log as l
 
 

@@ -1,6 +1,6 @@
-import frontend_wrapper.SocketClient as sc
-import frontend_wrapper.PageBot as pb
-import frontend_wrapper.BotWrapper as bw
+import frontend_wrapper.socket_client as sc
+import frontend_wrapper.page_bot as pb
+import frontend_wrapper.bot_wrapper as bw
 import config
 import time
 import threading
