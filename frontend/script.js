@@ -5,7 +5,7 @@ var notification_period_ms = 10000
 var audio_mime = "audio/flac";
 var text_mime = "text/plain";
 
-$("#send_button").click(onendButtonPressed);
+$("#send_button").click(onSendButtonPressed);
 function onSendButtonPressed(){
     message = $('#message_area').val();
     send_to_server({mime_type: text_mime, content: message});
