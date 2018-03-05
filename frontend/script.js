@@ -11,21 +11,19 @@ function onSendButtonPressed(){
     send_to_server({mime_type: text_mime, content: message});
 }
 
-
-
-message_style = "\"border:solid ;background: GreenYellow \"";
+message_style = "\"border:solid ;background: GreenYellow; white-space: pre;\"";
 function on_message(message) {
     message_div = $("<div class=col style="+message_style+"></div>").text(message);
     $("#responses").append(message_div)
 }
 
-exception_style = "\"border:solid ;background: red\"";
+exception_style = "\"border:solid ;background: red; white-space: pre;\"";
 function on_exception(message) {
     message_div = $("<div class=col style="+exception_style+"></div>").text(message);
     $("#responses").append(message_div)
 }
 
-unknown_style = "\"border:solid ;background: yellow\"";
+unknown_style = "\"border:solid ;background: yellow; white-space: pre;\"";
 function on_unknown_type(message) {
     message_div = $("<div class=col style="+unknown_style+"></div>").text(JSON.stringify(message));
     $("#responses").append(message_div)
@@ -34,10 +32,16 @@ function on_unknown_type(message) {
 
 function on_response(response) {
     console.log("received ", response)
-    if(response.type === "message") {
-        on_message(response.data.body)
+    if(response.type === "response") {
+        on_message(response.data.body.headline)
+        on_message(response.data.body.text_body)
     } else if(response.type === "exception") {
-        on_exception(response.data.body)
+        on_exception(response.data.body) }
+    else if(response.type === "lsit") {
+        for (var i = 0; i < response.data.length; i++) {
+            on_response(response.data[i]);
+        }
+
     } else {
         on_unknown_type(response);
     }

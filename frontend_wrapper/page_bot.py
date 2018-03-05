@@ -90,7 +90,7 @@ class PageBot(sn.Singleton):
             elif request_type == "notifications_request":
                 response = self.on_notification_request()
             else:
-                response = flask.jsonify({"type": "message", "body": "Cannot get message type"})
+                response = flask.jsonify({"type": "response", "body": "Cannot get message type"})
 
             logger.log("Response: {}".format(response))
             return response
@@ -99,4 +99,5 @@ class PageBot(sn.Singleton):
             app.run(host=config.frontend_host, port=config.frontend_port)
 
         flask_thread = threading.Thread(target=run_app)
+        flask_thread.daemon = True
         flask_thread.start()

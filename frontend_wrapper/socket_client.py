@@ -143,6 +143,7 @@ class SocketClient(sn.Singleton):
             time.sleep(SocketClient.wait_reconnect_s)
 
             with self.reconnect_lock:
+                self.new_sending_thread()
                 self.ws4py_client.connect()
 
     def is_connected(self):
