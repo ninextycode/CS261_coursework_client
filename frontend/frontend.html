@@ -7,31 +7,43 @@
 
         <!-- Bootstrap CSS -->
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+
+        <link rel='stylesheet' href='style.css'>
     </head>
     <body>
-        <div class='row'>
-             <div class='col'><h1>Hello, world!</h1></div>
-        </div>
+        <div class="container-fluid">
+            <div class='row' style="10vh;">
+                 <div class='col'><h1>Trade bot</h1></div>
+            </div>
 
-        <div class='row'></div>
-
-        <div class='row'>
-            <div class='col-1'></div>
-            <div class='col-5'>
-            <div class='input-group mb-3'>
-                    <div class='input-group-prepend'>
-                        <button class='btn btn-outline-secondary' type='button' id='send_button'>Button</button>
+            <div class='row'>
+                <div class='col-8 offset-2'>
+                    <div class='input-group mb-3'>
+                        <div class='row'></div>
+                        <input class='form-control' aria-label='With textarea' id='message_area'></input>
+                        <div class='input-group-prepend'>
+                            <button class='btn btn-outline-secondary' type='button' id='send_button'>Button</button>
+                        </div>
+                        <div class='input-group-prepend'>
+                            <button class='btn btn-outline-secondary' type='button' id='audio_button'>Button</button>
+                        </div>
                     </div>
-                    <textarea class='form-control' aria-label='With textarea' id='message_area'></textarea>
                 </div>
             </div>
-            <div class='col-1'>
-                <button type='button' class='btn btn-primary' id='audio_button'>Primary</button>
+
+            <div class='row'>
+                <div class='col-3 message_block offset-1'>
+                     <div id='errors' class="container" style="overflow-y: scroll; height:80vh;">
+                    </div>
+                </div>
+                <div class='col-7 message_block'>
+                    <div id='responses' class="container"  style="overflow-y:  scroll; height:80vh;">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id='responses'>
-        </div>
+
 
         <!-- jQuery first, then Tether, then Bootstrap JS. -->
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>

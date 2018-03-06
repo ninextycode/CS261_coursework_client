@@ -8,25 +8,33 @@ var text_mime = 'text/plain';
 $('#send_button').click(onSendButtonPressed);
 function onSendButtonPressed(){
     message = $('#message_area').val();
+    on_my_message(message);
     send_to_server({mime_type: text_mime, content: message});
 }
 
-message_style = '\'border:solid ;background: GreenYellow; white-space: pre;\'';
+message_style = '\'background: GreenYellow;\'';
 function on_message(message) {
-    message_div = $('<div class=col style='+message_style+'></div>').text(message);
-    $('#responses').append(message_div)
+    message_div = $('<div style='+message_style+' class=\"row message\"></div>').text(message);
+    $('#responses').prepend(message_div);
 }
 
-exception_style = '\'border:solid ;background: red; white-space: pre;\'';
+my_message_style = '\'background: #cce6ff;\'';
+function on_my_message(message) {
+    message_div = $('<div style='+my_message_style+' class=\"row message\"></div>').text(message);
+    $('#responses').prepend(message_div);
+}
+
+
+exception_style = '\'background: red;\'';
 function on_exception(message) {
-    message_div = $('<div class=col style='+exception_style+'></div>').text(message);
-    $('#responses').append(message_div)
+    message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
+    $('#errors').prepend(message_div);
 }
 
-unknown_style = '\'border:solid ;background: yellow; white-space: pre;\'';
+unknown_style = '\'background: yellow;\'';
 function on_unknown_type(message) {
-    message_div = $('<div class=col style='+unknown_style+'></div>').text(JSON.stringify(message));
-    $('#responses').append(message_div)
+    message_div = $('<div style='+unknown_style+'class=\"row message\"></div>').text(JSON.stringify(message));
+    $('#responses').prepend(message_div);
 }
 
 
