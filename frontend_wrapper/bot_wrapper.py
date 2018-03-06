@@ -4,7 +4,7 @@ import frontend_wrapper.singleton as sn
 import frontend_wrapper.Log as l
 
 
-logger = l.Logger("BotWrapper")
+logger = l.Logger('BotWrapper')
 
 
 class BotWrapper(sn.Singleton):
@@ -22,13 +22,13 @@ class BotWrapper(sn.Singleton):
         self.socket_client = client
 
     def on_text_from_client(self, message):
-        json_data = {"mime_type": "text/plain", "body": message}
+        json_data = {'mime_type': 'text/plain', 'body': message}
         self.on_json_from_client(json_data)
 
     def on_json_from_client(self, message_json):
-        logger.log("Client: {}".format(message_json))
+        logger.log('Client: {}'.format(message_json))
         self.socket_client.send(message_json)
 
     def on_json_from_server(self, message_json):
-        logger.log("Server {} ".format(message_json))
+        logger.log('Server {} '.format(message_json))
         self.api_wrapper.send_to_client(message_json)

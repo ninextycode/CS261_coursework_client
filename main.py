@@ -34,10 +34,10 @@ def start():
 def close():
     global page_bot, bot_wrapper, socket_client
     socket_client.close()
-    print("Closing")
+    print('Closing')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         start()
     except KeyboardInterrupt:

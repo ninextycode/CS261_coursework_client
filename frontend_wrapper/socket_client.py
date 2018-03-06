@@ -1,7 +1,7 @@
 try:
     import wsaccel
 except ImportError:
-    print("No wsaccel module")
+    print('No wsaccel module')
 import ws4py.client.threadedclient as tc
 
 import time
@@ -17,7 +17,7 @@ if wsaccel is not None:
     wsaccel.patch_ws4py()
 
 
-ws4py_logger = l.Logger("Ws4pyClient")
+ws4py_logger = l.Logger('Ws4pyClient')
 
 
 class Ws4pyClient(tc.WebSocketClient):
@@ -38,21 +38,21 @@ class Ws4pyClient(tc.WebSocketClient):
         self.connected = val
 
     def connect(self):
-        ws4py_logger.log("Connecting to {}".format(self.url))
+        ws4py_logger.log('Connecting to {}'.format(self.url))
         try:
             super().connect()
             self.set_connected(True)
             return True
         except Exception as e:
             self.set_connected(False)
-            ws4py_logger.log("Exception on connect: ", e)
+            ws4py_logger.log('Exception on connect: ', e)
             return False
 
     def opened(self):
         pass
 
     def closed(self, code, reason=None):
-        ws4py_logger.log("Closed, code: {}, reason: {}".format(code, reason))
+        ws4py_logger.log('Closed, code: {}, reason: {}'.format(code, reason))
 
         self.set_connected(False)
         if self.disconnect_callback is not None:
@@ -62,7 +62,7 @@ class Ws4pyClient(tc.WebSocketClient):
         self.message_callback(m)
 
 
-sc_logger = l.Logger("SocketClient")
+sc_logger = l.Logger('SocketClient')
 
 
 class SocketClient(sn.Singleton):
@@ -139,7 +139,7 @@ class SocketClient(sn.Singleton):
             self.ws4py_client.connect()
 
         while not self.is_connected():
-            sc_logger.log("Reconnect to {} in {} seconds".format(self.url, SocketClient.wait_reconnect_s))
+            sc_logger.log('Reconnect to {} in {} seconds'.format(self.url, SocketClient.wait_reconnect_s))
             time.sleep(SocketClient.wait_reconnect_s)
 
             with self.reconnect_lock:
@@ -175,8 +175,8 @@ class SocketClient(sn.Singleton):
                 self.stop_sending_thread_flag = False
 
     def on_message(self, message):
-        message_json = json.loads(message.data.decode("utf-8"))
-        sc_logger.log("SocketClient received {} {}".format(type(message_json), message_json))
+        message_json = json.loads(message.data.decode('utf-8'))
+        sc_logger.log('SocketClient received {} {}'.format(type(message_json), message_json))
         self.bot_wrapper.on_json_from_server(message_json)
 
     def send(self, message):
@@ -186,18 +186,18 @@ class SocketClient(sn.Singleton):
         # wait for reconnect
         with self.reset_connection_lock:
             if not self.is_connected():
-                raise Exception("Connect client first")
+                raise Exception('Connect client first')
             self.messages_to_send.append(message)
 
     def send_queued(self):
         with self.send_queued_lock:
             for m in self.messages_to_send:
                 self.unsafe_send(m)
-                sc_logger.log("SocketClient sent {} {}".format(type(m), m))
+                sc_logger.log('SocketClient sent {} {}'.format(type(m), m))
             self.messages_to_send = []
 
     def unsafe_send(self, message):
         if not self.is_connected():
-            raise Exception("Connect client first")
+            raise Exception('Connect client first')
         message_str = json.dumps(message)
         self.ws4py_client.send(message_str)

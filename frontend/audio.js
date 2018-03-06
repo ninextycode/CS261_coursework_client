@@ -9,10 +9,10 @@ var  audioOptions =  {
     ext: '.ogg'
 };
 
-var start_audio_text = "Record"
-var stop_audio_text = "Stop"
+var start_audio_text = 'Record'
+var stop_audio_text = 'Stop'
 
-var audio_button = $("#audio_button"); 
+var audio_button = $('#audio_button');
 audio_button.text(start_audio_text);
 audio_button.click(on_audio_click);
 
@@ -29,7 +29,7 @@ function setup_audio_recording() {
     },
     _reason => {
         audio_button.prop('disabled', true);
-        alert("Cannot get audio. Reason: " + _reason);
+        alert('Cannot get audio. Reason: ' + _reason);
     });
 }
 
@@ -47,7 +47,7 @@ function on_audio_click(e) {
 function start_recording() {
     if(!audio_setup) {
         audio_button.prop('disabled', true);
-        audio_button.text("Problems recording audio");
+        audio_button.text('Problems recording audio');
         return
     }
     audio_button.text(stop_audio_text);

@@ -11,7 +11,7 @@ import frontend_wrapper.singleton as sn
 import config
 
 
-logger = l.Logger("PageBot")
+logger = l.Logger('PageBot')
 
 
 class PageBot(sn.Singleton):
@@ -22,18 +22,18 @@ class PageBot(sn.Singleton):
         self.bot_wrapper = None
 
         test_not_1 = {
-            "type": "notification",
-            "data": {
-                "mime_type": "text/plain",
-                "body": "NOTIFICATION 1"
+            'type': 'notification',
+            'data': {
+                'mime_type': 'text/plain',
+                'body': 'NOTIFICATION 1'
             }
         }
 
         test_not_2 = {
-            "type": "notification",
-            "data": {
-                "mime_type": "text/plain",
-                "body": "NOTIFICATION 2"
+            'type': 'notification',
+            'data': {
+                'mime_type': 'text/plain',
+                'body': 'NOTIFICATION 2'
             }
         }
 
@@ -53,8 +53,8 @@ class PageBot(sn.Singleton):
             t = self.messages_to_send_to_client
             self.messages_to_send_to_client = []
             message = {
-                "type": "lsit",
-                "data": t
+                'type': 'lsit',
+                'data': t
             }
             return flask.jsonify(message)
 
@@ -76,23 +76,23 @@ class PageBot(sn.Singleton):
         app = flask.Flask(__name__)
         flask_cors.CORS(app)
 
-        @app.route("/", methods=['GET', 'POST'])
+        @app.route('/', methods=['GET', 'POST'])
         def general_route():
-            logger.log("Received: {}".format(flask.request.json))
+            logger.log('Received: {}'.format(flask.request.json))
 
-            request_type = ""
+            request_type = ''
             if flask.request.json is not None:
-                request_type = flask.request.json.get("type", "")
+                request_type = flask.request.json.get('type', '')
 
-            if request_type == "message":
-                request_data = flask.request.json.get("data", {})
+            if request_type == 'message':
+                request_data = flask.request.json.get('data', {})
                 response = self.on_message_return_next_response(request_data)
-            elif request_type == "notifications_request":
+            elif request_type == 'notifications_request':
                 response = self.on_notification_request()
             else:
-                response = flask.jsonify({"type": "response", "body": "Cannot get message type"})
+                response = flask.jsonify({'type': 'response', 'body': 'Cannot get message type'})
 
-            logger.log("Response: {}".format(response))
+            logger.log('Response: {}'.format(response))
             return response
 
         def run_app():
