@@ -5,8 +5,6 @@ var notification_period_ms = 10000
 var audio_mime = 'audio/flac';
 var text_mime = 'text/plain';
 
-var input_template = "<div class='message_wrapper'><div class='input message'></div></div>";
-var output_template = "<div class='message_wrapper'><div class='output message'></div></div>";
 
 $('#send_button').click(onSendButtonPressed);
 function onSendButtonPressed(){
@@ -16,12 +14,14 @@ function onSendButtonPressed(){
 }
 
 function on_message(message) {
-    message_div = $(output_template).text(message);
-    $('#responses').append(message_div);
+    var html = "<div class='message_wrapper'><div class='input message'>";
+    html += message + "</div></div>";
+    $('#responses').append(html);
 }
 function on_my_message(message) {
-    message_div = $(input_template).text(message);
-    $('#responses').append(message_div);
+    var html = "<div class='message_wrapper'><div class='output message'>";
+    html += message + "</div></div>";
+    $('#responses').append(html);
 }
 
 
