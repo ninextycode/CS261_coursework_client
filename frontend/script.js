@@ -5,6 +5,9 @@ var notification_period_ms = 10000
 var audio_mime = 'audio/flac';
 var text_mime = 'text/plain';
 
+var input_template = "<div class='message_wrapper'><div class='input message'></div></div>";
+var output_template = "<div class='message_wrapper'><div class='output message'></div></div>";
+
 $('#send_button').click(onSendButtonPressed);
 function onSendButtonPressed(){
     message = $('#message_area').val();
@@ -12,6 +15,17 @@ function onSendButtonPressed(){
     send_to_server({mime_type: text_mime, content: message});
 }
 
+function on_message(message) {
+    message_div = $(output_template).text(message);
+    $('#responses').append(message_div);
+}
+function on_my_message(message) {
+    message_div = $(input_template).text(message);
+    $('#responses').append(message_div);
+}
+
+
+/*
 message_style = '\'background: GreenYellow;\'';
 function on_message(message) {
     message_div = $('<div style='+message_style+' class=\"row message\"></div>').text(message);
@@ -23,26 +37,32 @@ function on_my_message(message) {
     message_div = $('<div style='+my_message_style+' class=\"row message\"></div>').text(message);
     $('#responses').prepend(message_div);
 }
+*/
 
 
 exception_style = '\'background: red;\'';
 function on_exception(message) {
+  /*
     message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
     $('#errors').prepend(message_div);
+    */
 }
 
 unknown_style = '\'background: yellow;\'';
 function on_unknown_type(message) {
+  /*
     message_div = $('<div style='+unknown_style+'class=\"row message\"></div>').text(JSON.stringify(message));
     $('#responses').prepend(message_div);
+    */
 }
 
 
 function on_response(response) {
     console.log('received ', response)
     if(response.type === 'response') {
-        on_message(response.data.body.headline)
-        on_message(response.data.body.text_body)
+          on_message(response.data.body.headline)
+          on_message(response.data.body.text_body)
+
     } else if(response.type === 'exception') {
         on_exception(response.data.body) }
     else if(response.type === 'lsit') {

@@ -4,13 +4,35 @@
         <!-- Required meta tags -->
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-
         <!-- Bootstrap CSS -->
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
-
         <link rel='stylesheet' href='style.css'>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
     </head>
     <body>
+      <div class='content_wrapper'>
+        <div class='header'>TraderBot</div>
+        <div class='messages' id='responses'>
+          <!--
+          <div class='message_wrapper'>
+            <div class='input message'></div>
+          </div>
+          <div class='message_wrapper'>
+            <div class='output message'></div>
+          </div>
+        -->
+        </div>
+      <div class='input-box'>
+        <textarea id='message_area' rows='1' placeholder='Ask some questions...'></textarea>
+        <div class='button' id='send_button'>send</div>
+        <button class='btn btn-outline-secondary' type='button' id='audio_button' style='display:none;'>Button</button>
+        <!--
+        <button class='btn btn-outline-secondary' type='button' id='send_button'>Button</button>
+        <button class='btn btn-outline-secondary' type='button' id='audio_button'>Button</button>
+    -->
+      </div>
+    </div>
+      <!--
         <div class="container-fluid">
             <div class='row' style="10vh;">
                  <div class='col'><h1>Trade bot</h1></div>
@@ -42,6 +64,7 @@
                 </div>
             </div>
         </div>
+      -->
 
 
 
