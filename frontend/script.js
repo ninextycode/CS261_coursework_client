@@ -14,12 +14,12 @@ function onSendButtonPressed(){
 }
 
 function on_message(message) {
-    var html = "<div class='message_wrapper'><div class='input message'>";
+    var html = "<div class='message_wrapper'><div class='output message'>";
     html += message + "</div></div>";
     $('#responses').append(html);
 }
 function on_my_message(message) {
-    var html = "<div class='message_wrapper'><div class='output message'>";
+    var html = "<div class='message_wrapper'><div class='input message'>";
     html += message + "</div></div>";
     $('#responses').append(html);
 }
