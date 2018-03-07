@@ -119,7 +119,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
 
   function on_response(response) {
       console.log('received ', response);
-      $('.typing_msg').hide();
+
       if(response.type === 'response') {
           if(response.additional_data.formal_request.subtype == 'news'){
             on_message(response.data.body.headline);
@@ -139,6 +139,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
       } else {
           on_unknown_type(response);
       }
+       $('.typing_msg').hide();
   }
 
   function generate_news(news_data){
@@ -155,6 +156,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
 
   function send_to_server(message) {
       $('.typing_msg').show();
+      $('#responses').scrollTop($('#responses')[0].scrollHeight);
       message_json = {type: 'message', data: {body: message}};
       send_json(message_json);
   }
