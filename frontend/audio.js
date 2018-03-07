@@ -8,14 +8,16 @@ var  audioOptions =  {
     type: 'audio/ogg',
     ext: '.ogg'
 };
-
+/*
 var start_audio_text = 'Record'
 var stop_audio_text = 'Stop'
 
-var audio_button = $('#audio_button');
 audio_button.text(start_audio_text);
-audio_button.click(on_audio_click);
+*/
+var audio_button = $('#audio_button');
+var recording = false;
 
+audio_button.on("click",on_audio_click);
 function setup_audio_recording() {
     navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
         stream = _stream;
@@ -25,10 +27,13 @@ function setup_audio_recording() {
             if(recorder.state == 'inactive')  make_blob();
         };
         audio_setup = true;
+        $('#no_audio_icon').hide();
+        $('#audio_icon').show();
         console.log('got media successfully');
     },
     _reason => {
-        audio_button.prop('disabled', true);
+        //audio_button.prop('disabled', true);
+        audio_button.off("click");
         alert('Cannot get audio. Reason: ' + _reason);
     });
 }
@@ -36,9 +41,9 @@ function setup_audio_recording() {
 setup_audio_recording()
 
 function on_audio_click(e) {
-    if(audio_button.text() === start_audio_text) {
+    if(!recording) {
         start_recording();
-    } else if(audio_button.text() === stop_audio_text) {
+    } else {
         stop_recording();
     }
 
@@ -46,17 +51,22 @@ function on_audio_click(e) {
 
 function start_recording() {
     if(!audio_setup) {
-        audio_button.prop('disabled', true);
-        audio_button.text('Problems recording audio');
+        //audio_button.prop('disabled', true);
+        audio_button.off("click");
+        //audio_button.text('Problems recording audio');
         return
     }
-    audio_button.text(stop_audio_text);
+    //audio_button.text(stop_audio_text);
+    recording = !recording;
+    audio_button.addClass("recording");
     chunks=[];
     recorder.start();
 }
 
 function stop_recording() {
-    audio_button.text(start_audio_text);
+    //audio_button.text(start_audio_text);
+    recording = !recording;
+    audio_button.removeClass("recording");
     recorder.stop();
 }
 

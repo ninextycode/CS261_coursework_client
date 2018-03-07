@@ -12,6 +12,8 @@ $( document ).ready(function() {
       message = $('#message_area').val().trim();
       if(message != null && message != ''){
         $('#message_area').val('');
+        $('#send_button').hide();
+        $('#audio_button').show();
         $("#message_area").prop('rows',1);
         on_my_message(message.replace("\n", "<br>"));
         send_to_server({mime_type: text_mime, content: message});
@@ -31,7 +33,18 @@ $( document ).ready(function() {
         }
       }
     }
-});
+  });
+  $("#message_area").keyup(function(){
+    var val = message = $(this).val().trim();
+    console.log(val);
+    if(val != null && val != ""){
+      $('#send_button').show();
+      $('#audio_button').hide();
+    }else{
+      $('#send_button').hide();
+      $('#audio_button').show();
+    }
+  });
 
   function on_message(message) {
       var html = "<div class='message_wrapper'><div class='output message'>";

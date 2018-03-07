@@ -63,15 +63,25 @@ body{
   background-color:#E5E4E9;
 }
 .button{
-  float:right;
+  position:absolute;
+  right:0px;
+  bottom:5px;
   background-color:white;
   margin-right: 30px;
   font-size:43px;
   text-align: center;
   color:#59af50;
-
-
 }
+#no_audio_icon{
+  color:grey;
+}
+#audio_icon{
+  display:none;
+}
+#send_button{
+  display:none;
+}
+
 #message_area{
   font-family: 'Open Sans', sans-serif;
   background-color:#efefef;
@@ -90,4 +100,23 @@ body{
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+}
+
+.recording {
+  -webkit-animation: blinking 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: blinking 1.5s infinite;  /* Fx 5+ */
+  -o-animation: blinking 1.5s infinite;  /* Opera 12+ */
+  animation: blinking 1.5s infinite;  /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes blinking {
+  0%{
+    color:red;
+  }
+  50% {
+    color:white;
+  }
+  100% {
+    color:red;
+  }
 }
