@@ -1,4 +1,5 @@
-var audio_setup = false;
+//global variable for script.js
+audio_setup = false;
 
 var  stream;
 var  recorder;
@@ -26,7 +27,7 @@ $( document ).ready(function() {
               if(recorder.state == 'inactive')  make_blob();
           };
           audio_setup = true;
-          $('#no_audio_icon').hide();
+          $('#send_button').hide();
           $('#audio_icon').show();
           audio_button.on("click",on_audio_click);
           $(document).on("keydown",on_spacebar_press);
