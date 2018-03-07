@@ -191,5 +191,12 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
   }
   */
   request_notifications_recurrent();
-  //on_response(json);
+  on_response(json);
+  on_response(json);
+  on_response(json);
+  on_response(json);
+  on_response(json);
+  on_response(json);
+
+  on_response(json);
   $('#responses').scrollTop($('#responses')[0].scrollHeight);
