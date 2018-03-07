@@ -38,7 +38,6 @@ $( document ).ready(function() {
   });
   $("#message_area").keyup(function(){
     var val = message = $(this).val().trim();
-    console.log(val);
     if(val != null && val != ""){
       $('#send_button').show();
       $('#audio_button').hide();

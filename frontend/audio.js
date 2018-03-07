@@ -35,9 +35,7 @@ $( document ).ready(function() {
       _reason => {
           //audio_button.prop('disabled', true);
           alert('Cannot get audio. Reason: ' + _reason);
-          $('#no_audio_icon').hide();
-          $('#audio_icon').hide();
-          $('#send_button').show();
+
       });
   }
 
