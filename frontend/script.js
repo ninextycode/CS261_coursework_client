@@ -108,7 +108,8 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
       message_div = $('<div style='+unknown_style+'class=\"row message\"></div>').text(JSON.stringify(message));
       $('#responses').prepend(message_div);
       */
-      message = "**UNKNOWN TYPE**<br>"+JSON.stringify(message);
+      console.log("**UNKNOWN TYPE**<br>"+JSON.stringify(message));
+      message = "Sorry I don't understand";
       var html = "<div class='message_wrapper'><div class='output message'>";
       html += message + "</div></div>";
       $(html).insertBefore('.typing_msg');
