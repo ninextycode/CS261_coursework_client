@@ -47,11 +47,15 @@ body{
 .message{
   font-family: 'Open Sans', sans-serif;
   border-radius: 1em;
-  margin: 0 15px 10px;
-  padding: 15px 20px;
+  margin: 5px 10px;
+  padding: 10px 15px;
   overflow-wrap: break-word;
   max-width:70%;
   display:inline-block;
+  font-size:12px;
+}
+.news{
+  font-size:10px;
 }
 
 .input{
@@ -72,6 +76,7 @@ body{
   text-align: center;
   color:#59af50;
 }
+
 .hover :hover{
   color:#6fd365;
 }
@@ -83,7 +88,7 @@ body{
 }
 
 #send_button{
-  
+
 }
 
 #message_area{
@@ -125,3 +130,67 @@ body{
     color:red;
   }
 }
+
+.typing_msg{
+  display:none;
+}
+.dot{
+  color:#E5E4E9;
+  margin-right: 3px;
+  font-size:7px;
+  -webkit-animation: waiting 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: waiting 1.5s infinite;  /* Fx 5+ */
+  -o-animation: waiting 1.5s infinite;  /* Opera 12+ */
+  animation: waiting 1.5s infinite;  /* IE 10+, Fx 29+ */
+  animation-timing-function: linear;
+}
+
+#dot1 {
+  animation-delay: 0.3s;
+}
+#dot2 {
+  animation-delay: 0.6s;
+}
+#dot3 {
+  animation-delay: 0.9s;
+}
+
+@-webkit-keyframes waiting {
+  0%{
+    color:gray;
+  }
+  100% {
+    color:#E5E4E9;
+  }
+
+}
+@media (min-width: 480px) {
+  .message{
+    font-size:13px;
+    margin:5px 20px;
+  }
+ }
+
+
+@media (min-width: 768px) {
+  .message{
+    font-size:14px;
+    margin:5px 30px;
+  }
+ }
+
+
+@media (min-width: 992px) {
+  .message{
+    font-size:15px;
+    margin:5px 40px;
+  }
+ }
+
+
+@media (min-width: 1200px) {
+  .message{
+    font-size:17px;
+    margin:5px 50px;
+  }
+ }
