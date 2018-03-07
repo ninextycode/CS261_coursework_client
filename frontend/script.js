@@ -149,6 +149,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
     html +=  "</table></div>";
     $(html).insertBefore('.typing_msg');
     //$('#responses').append(html);
+    console.log($('#responses')[0].scrollHeight);
     $('#responses').scrollTop($('#responses')[0].scrollHeight);
   }
 
@@ -191,12 +192,6 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
   }
   */
   request_notifications_recurrent();
-  on_response(json);
-  on_response(json);
-  on_response(json);
-  on_response(json);
-  on_response(json);
-  on_response(json);
 
-  on_response(json);
+  //on_response(json);
   $('#responses').scrollTop($('#responses')[0].scrollHeight);

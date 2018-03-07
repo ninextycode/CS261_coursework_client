@@ -45,11 +45,17 @@ body{
 }
 .messages{
   width:100%;
+  box-sizing:border-box;
   height:100%;
-  padding:85px 0px 70px 0px;
+  padding: 85px 0px 0px 0px;
   overflow: auto;
-
 }
+.messages:after {
+  content:'';
+  display:block;
+  padding-bottom:100px;
+}
+
 .message_wrapper{
   overflow: auto;
   position:relative;
