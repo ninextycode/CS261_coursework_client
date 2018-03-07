@@ -142,12 +142,11 @@ $( document ).ready(function() {
   }
 
   function generate_news(news_data){
-    var html = "<div class='message_wrapper'><div class='output message'>";
-    news_data.forEach(function(news){
-      console.log(news);
-      html += news.title +'<br>';
+    var html = "<div class='message_wrapper'><table class='output message news'>";
+    news_data.forEach(function(news,i){
+      html += "<tr><td><a target='_blank' href='"+news.link+"'>"+(i+1)+". " +news.title+ '</a></td></tr>';
     });
-    html +=  "</div></div>";
+    html +=  "</noticeable></div>";
     $(html).insertBefore('.typing_msg');
     //$('#responses').append(html);
     $('#responses').scrollTop($('#responses')[0].scrollHeight);
@@ -192,6 +191,6 @@ $( document ).ready(function() {
   }
   */
   request_notifications_recurrent();
-  on_response(json);
+  //on_response(json);
   $('#responses').scrollTop($('#responses')[0].scrollHeight);
 });
