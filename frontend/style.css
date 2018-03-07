@@ -72,12 +72,16 @@ body{
   text-align: center;
   color:#59af50;
 }
+.hover :hover{
+  color:#6fd365;
+}
 #no_audio_icon{
   color:grey;
 }
 #audio_icon{
   display:none;
 }
+
 #send_button{
   display:none;
 }
@@ -108,6 +112,7 @@ body{
   -o-animation: blinking 1.5s infinite;  /* Opera 12+ */
   animation: blinking 1.5s infinite;  /* IE 10+, Fx 29+ */
 }
+
 
 @-webkit-keyframes blinking {
   0%{
