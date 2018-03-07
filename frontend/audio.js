@@ -17,7 +17,7 @@ audio_button.text(start_audio_text);
 */
 var audio_button = $('#audio_button');
 var recording = false;
-$( document ).ready(function() {
+
   function setup_audio_recording() {
       navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
           stream = _stream;
@@ -109,4 +109,3 @@ $( document ).ready(function() {
       fileReader.readAsArrayBuffer(blob);
 
   }
-});
