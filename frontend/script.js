@@ -131,7 +131,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
           }
       } else if(response.type === 'exception') {
           on_exception(response.data.body);
-      }else if(response.type === 'lsit') {
+      }else if(response.type === 'list') {
           for (var i = 0; i < response.data.length; i++) {
               on_response(response.data[i]);
           }
