@@ -146,7 +146,7 @@ var json = {"additional_data":{"formal_request":{"keywords":["trump"],"subtype":
     news_data.forEach(function(news,i){
       html += "<tr><td><a target='_blank' href='"+news.link+"'>"+(i+1)+". " +news.title+ '</a></td></tr>';
     });
-    html +=  "</noticeable></div>";
+    html +=  "</table></div>";
     $(html).insertBefore('.typing_msg');
     //$('#responses').append(html);
     $('#responses').scrollTop($('#responses')[0].scrollHeight);
