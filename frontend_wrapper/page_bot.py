@@ -53,7 +53,7 @@ class PageBot(sn.Singleton):
             t = self.messages_to_send_to_client
             self.messages_to_send_to_client = []
             message = {
-                'type': 'lsit',
+                'type': 'list',
                 'data': t
             }
             return flask.jsonify(message)
