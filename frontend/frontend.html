@@ -13,11 +13,18 @@
     <body>
       <div class='content_wrapper'>
         <div class='messages' id='responses'>
-          <div class='message_wrapper typing_msg' >
+          <div class='message_wrapper typing_msg' id="input_waiting">
+            <div class='input message'>
+              <i class="fas fa-circle dot inputDot" id='dot1'></i>
+              <i class="fas fa-circle dot inputDot" id='dot2'></i>
+              <i class="fas fa-circle dot inputDot" id='dot3'></i>
+            </div>
+          </div>
+          <div class='message_wrapper typing_msg' id="output_waiting">
             <div class='output message'>
-              <i class="fas fa-circle dot" id='dot1'></i>
-              <i class="fas fa-circle dot" id='dot2'></i>
-              <i class="fas fa-circle dot" id='dot3'></i>
+              <i class="fas fa-circle dot outputDot" id='dot1'></i>
+              <i class="fas fa-circle dot outputDot" id='dot2'></i>
+              <i class="fas fa-circle dot outputDot" id='dot3'></i>
             </div>
           </div>
         </div>

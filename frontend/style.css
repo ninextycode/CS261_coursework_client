@@ -1,7 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+
 a {
   text-decoration: none;
 }
@@ -70,15 +67,15 @@ body{
   max-width:70%;
   display:inline-block;
   font-size:12px;
+  color:white;
 }
 
 .input{
  float:right;
  background-color:#59af50;
- color:white;
 }
 .output{
-  background-color:#E5E4E9;
+  background-color:#565656;
 }
 
 .news{
@@ -146,6 +143,16 @@ body{
   animation: blinking 1.5s infinite;  /* IE 10+, Fx 29+ */
 }
 
+.social_media_panel {
+  display:none;
+  padding-top:40px;
+  margin: -30px 10px 10px 10px;
+  color:black;
+  background-color:white;
+  border: 1px solid;
+  border-color:#a5a5a5;
+
+}
 
 @-webkit-keyframes blinking {
   0%{
@@ -163,15 +170,25 @@ body{
   display:none;
 }
 .dot{
-  color:#E5E4E9;
   margin-right: 3px;
   font-size:7px;
-  -webkit-animation: waiting 1.5s infinite;  /* Safari 4+ */
-  -moz-animation: waiting 1.5s infinite;  /* Fx 5+ */
-  -o-animation: waiting 1.5s infinite;  /* Opera 12+ */
-  animation: waiting 1.5s infinite;  /* IE 10+, Fx 29+ */
   animation-timing-function: linear;
 }
+.inputDot{
+  color:#59af50;
+  -webkit-animation: waitingInput 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: waitingInput 1.5s infinite;  /* Fx 5+ */
+  -o-animation: waitingInput 1.5s infinite;  /* Opera 12+ */
+  animation: waitingInput 1.5s infinite;  /* IE 10+, Fx 29+ */
+}
+.outputDot{
+  color:#565656;
+  -webkit-animation: waitingOutput 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: waitingOutput 1.5s infinite;  /* Fx 5+ */
+  -o-animation: waitingOutput 1.5s infinite;  /* Opera 12+ */
+  animation: waitingOutput 1.5s infinite;  /* IE 10+, Fx 29+ */
+}
+
 
 #dot1 {
   animation-delay: 0.3s;
@@ -183,19 +200,46 @@ body{
   animation-delay: 0.9s;
 }
 
-@-webkit-keyframes waiting {
+@-webkit-keyframes waitingOutput {
   0%{
-    color:gray;
+    color:white;
   }
   100% {
-    color:#E5E4E9;
+    color:#565656;
   }
+}
+@-webkit-keyframes waitingInput {
+  0%{
+    color:white;
+  }
+  100% {
+    color:#59af50;
+  }
+}
+.drop_down_arrow{
+  display:block;
+  width:fit-content;
+  text-align:center;
+  padding:0;
+  margin:-5px auto -15px auto;
+  font-size:20px;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+.drop_down_arrow:hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+
+.expandable:hover{
+  background-color:#7f7e7e;
 }
 
 @media (min-width: 480px) {
   .message{
     font-size:13px;
-    margin:5px 20px;
+    margin-left:20px;
+    margin-right:20px;
   }
  }
 
@@ -203,7 +247,8 @@ body{
 @media (min-width: 768px) {
   .message{
     font-size:14px;
-    margin:5px 30px;
+    margin-left:30px;
+    margin-right:30px;
   }
  }
 
@@ -211,7 +256,8 @@ body{
 @media (min-width: 992px) {
   .message{
     font-size:15px;
-    margin:5px 40px;
+    margin-left:40px;
+    margin-right:40px;
   }
  }
 
@@ -219,6 +265,7 @@ body{
 @media (min-width: 1200px) {
   .message{
     font-size:17px;
-    margin:5px 50px;
+    margin-left:50px;
+    margin-right:50px;
   }
  }
