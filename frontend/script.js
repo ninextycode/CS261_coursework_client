@@ -421,9 +421,9 @@ $(document).ready(function() {
       message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
       $('#errors').prepend(message_div);
       */
-
-        var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
-        $(html).insertBefore('#input_waiting');
+        on_notification("There's an error in me.");
+        //var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
+        //$(html).insertBefore('#input_waiting');
         //$('#responses').append(html);
         $('#responses').scrollTop($('#responses')[0].scrollHeight);
 
@@ -471,7 +471,7 @@ $(document).ready(function() {
             generate_industry(response.additional_data);
           }
       } else if(response.type === 'notification') {
-            on_notification(response);
+            on_notification(response.data.body);
       } else if(response.type === 'exception') {
           on_exception(response.data.body);
       }else if(response.type === 'list') {
@@ -484,8 +484,7 @@ $(document).ready(function() {
       $('#output_waiting').hide();
   }
 
-  function on_notification(data){
-    var msg = data.data.body;
+  function on_notification(msg){
     if(!($('.notifications').hasClass('slide'))){
       $('.notify').addClass('unread');
     }
