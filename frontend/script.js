@@ -202,6 +202,7 @@ $(document).ready(function() {
      $(this).parent().find('.drop_down_arrow').removeClass('rotate');
    });
 
+/*
    $(".messages").on('hover', '.news_title, .news .drop_down_arrow',function(){
      $(this).css('color','white');
    },
@@ -209,9 +210,9 @@ $(document).ready(function() {
      $(this).css('color','lightGray');
    });
 
+*/
 
 
-/*
   $('.news_title, .news .drop_down_arrow').hover(function(){
     $(this).css('color','white');
   },
@@ -219,7 +220,7 @@ $(document).ready(function() {
     $(this).css('color','lightGray');
   });
 
-  */
+  /*
   $(".messages").on('hover', '.news',function(){
     $(this).css('background','#565656');
     $(this).find('.news_title').css('color','lightGray');
@@ -230,7 +231,8 @@ $(document).ready(function() {
     $(this).find('.news_title').css('color','#565656');
     $(this).find(".drop_down_arrow").css('color','#565656');
   });
-/*
+  */
+
   $('.news').hover(function(){
     $(this).css('background','#565656');
     $(this).find('.news_title').css('color','lightGray');
@@ -241,7 +243,7 @@ $(document).ready(function() {
     $(this).find('.news_title').css('color','#565656');
     $(this).find(".drop_down_arrow").css('color','#565656');
   });
-*/
+
 
 
 
