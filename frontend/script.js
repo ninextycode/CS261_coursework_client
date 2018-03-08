@@ -188,6 +188,10 @@ $(document).ready(function() {
       $(this).parent().find('.drop_down_arrow').removeClass('rotate');
     }
    });
+   $('.header').click(function(){
+     $('.notifications').toggleClass('slide');
+
+   });
 
 
    $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
@@ -387,6 +391,10 @@ $(document).ready(function() {
       $('#output_waiting').hide();
   }
 
+  function on_notification(data){
+
+  }
+  
   function generate_news(data){
     var news_data = data.unformatted_data;
     var keywords = data.formal_request.keywords;
@@ -514,6 +522,7 @@ $(document).ready(function() {
       if(indicator == "industry_average"){
         var msg = 'The average price of the industry is ';
         msg += data.unformatted_data.industry_average.average + " GBX.";
+
         on_message(msg);
       }
     });

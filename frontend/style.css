@@ -300,22 +300,40 @@ body{
 .notifications{
   position:fixed;
   top:0px;
-  left:0px;
-  width:80vw;
-  min-width:320px;
-  max-width:900px;
+  right:-320px;
+  width:320px;
   height: 100vh;
   background-color:#565656;
   margin-top:65px;
   padding:30px 30px 0px 30px;
   box-sizing: border-box;
   z-index: 1;
-  display:none;
+  opacity:0.95;
+  transition: all 0.5s;
+  color:white;
 }
 .notifications:after {
   content:'';
   display:block;
   padding-bottom:100px;
+}
+.slide {
+    right: 0;
+}
+.notify{
+  margin:0;
+  margin-top:7px;
+  padding:0px 25px 0px 0px;
+  float:right;
+}
+.notification{
+  
+}
+.odd{
+
+}
+.even{
+
 }
 @media (min-width: 480px) {
   .message{
