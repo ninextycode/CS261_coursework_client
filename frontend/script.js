@@ -21,7 +21,7 @@ var json6 = {
      "tickers": [
        "TSCO"
      ],
-     "time": "[datetime.datetime(2018, 3, 1, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+     "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
      "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
      "type": "data_request"
    },
@@ -106,6 +106,96 @@ var json4 = {
  "type": "response"
 };
 */
+var json4 ={
+ "additional_data": {
+   "formal_request": {
+     "indicators": [
+       "price_change"
+     ],
+     "raw_input": "what does a change of price of Tesco in Black Lace this month",
+     "subtype": "stock",
+     "tickers": [
+       "TSCO"
+     ],
+     "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+     "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+     "type": "data_request"
+   },
+   "unformatted_data": {
+     "price_change": {
+       "TSCO": "32.894",
+       "average": "32.894"
+     }
+   }
+ },
+ "data": {
+   "body": "The price of tesco did not change in the past hours",
+   "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+   "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+   "type": "data_request"
+ },
+ "type": "notification"
+};
+var json7 ={
+ "additional_data": {
+   "formal_request": {
+     "indicators": [
+       "price_change"
+     ],
+     "raw_input": "what does a change of price of Tesco in Black Lace this month",
+     "subtype": "stock",
+     "tickers": [
+       "TSCO"
+     ],
+     "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+     "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+     "type": "data_request"
+   },
+   "unformatted_data": {
+     "price_change": {
+       "TSCO": "32.894",
+       "average": "32.894"
+     }
+   }
+ },
+ "data": {
+   "body": "2",
+   "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+   "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+   "type": "data_request"
+ },
+ "type": "notification"
+};
+var json9 ={
+ "additional_data": {
+   "formal_request": {
+     "indicators": [
+       "price_change"
+     ],
+     "raw_input": "what does a change of price of Tesco in Black Lace this month",
+     "subtype": "stock",
+     "tickers": [
+       "TSCO"
+     ],
+     "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+     "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+     "type": "data_request"
+   },
+   "unformatted_data": {
+     "price_change": {
+       "TSCO": "32.894",
+       "average": "32.894"
+     }
+   }
+ },
+ "data": {
+   "body": "3",
+   "time": ["2002-12-25 00:00:00", "2002-12-25 01:00:00"],
+   "time_period": "[datetime.datetime(2018, 3, 7, 0, 0), datetime.datetime(2018, 3, 7, 16, 46)]",
+   "type": "data_request"
+ },
+ "type": "notification"
+};
 var json2 = {
  "additional_data": {
    "formal_request": {
@@ -188,8 +278,11 @@ $(document).ready(function() {
       $(this).parent().find('.drop_down_arrow').removeClass('rotate');
     }
    });
-   $('.header').click(function(){
+   $('.header, .notify, .notifications').click(function(){
      $('.notifications').toggleClass('slide');
+     if($('.notify').hasClass('unread')){
+       $('.notify').toggleClass('unread');
+     }
 
    });
 
@@ -328,16 +421,14 @@ $(document).ready(function() {
       message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
       $('#errors').prepend(message_div);
       */
-      if(debug){
-        message = "**ERROR**<br>"+(message);
-        var html = "<div class='message_wrapper'><div class='output message'>";
-        html += message + "</div></div>";
+
+        var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
         $(html).insertBefore('#input_waiting');
         //$('#responses').append(html);
         $('#responses').scrollTop($('#responses')[0].scrollHeight);
-      }else{
+
         console.log("**ERROR** "+message);
-      }
+      //}
   }
 
   //unknown_style = '\'background: yellow;\'';
@@ -385,6 +476,8 @@ $(document).ready(function() {
           for (var i = 0; i < response.data.length; i++) {
               on_response(response.data[i]);
           }
+      }else if(response.type === 'notification') {
+          on_notification(response);
       } else {
           on_unknown_type(response);
       }
@@ -392,9 +485,15 @@ $(document).ready(function() {
   }
 
   function on_notification(data){
-
+    var msg = data.data.body;
+    if(!($('.notifications').hasClass('slide'))){
+      $('.notify').addClass('unread');
+    }
+    var html = "<div class='message notification'>"+msg+"</div>";
+    $('.notifications').append(html);
+    $('.notifications').scrollTop($('.notifications')[0].scrollHeight);
   }
-  
+
   function generate_news(data){
     var news_data = data.unformatted_data;
     var keywords = data.formal_request.keywords;
@@ -466,7 +565,7 @@ $(document).ready(function() {
     var indicators = data.formal_request.indicators;
     var companies = data.formal_request.tickers;
     indicators.forEach(function(indicator){
-      if(indicator == "just_price" || indicator == "price_change" || indicator == "stock_variance"){
+      if(indicator == "price" || indicator == "price_change" ){
         var arr = [];
         companies.forEach(function(company){
           arr.push(data.unformatted_data[indicator][company]);
@@ -477,6 +576,9 @@ $(document).ready(function() {
             });
             on_message('The price'+((companies.length>1)?'s':'')+' of '+text_array(companies)+((companies.length>1)?' are ':' is ')+text_array(arr)+'.');
         }else if(indicator == "price_change"){
+          //var arr = JSON.parse(data.formal_request.time);
+          var from = data.formal_request.time[0];
+          var to = data.formal_request.time[1];
           if(arr.length == 1){
             var msg = 'The price of '+companies[0];
             var change = parseFloat(arr[0]);
@@ -487,15 +589,7 @@ $(document).ready(function() {
             }else{
               msg += " decreases by "+change+" GBX";
             }
-            //data.formal_request.time[0]
-            //2018, 3, 7, 16, 46
-            /*
-            re = /\(([^)]+)\)/g;
-            dates = re.exec(data.formal_request.time);
-            console.log(dates);
-            msg += Date.parse(2018, 3, 1, 0, 0);
-            msg += Date.parse(dates[1]);
-            */
+            msg += " from "+from+" to "+to+". ";
             on_message(msg);
           }else{
             //FROM DATE
@@ -506,8 +600,8 @@ $(document).ready(function() {
               }
               arr[i] = arr[i] +" GBX"
             });
-            msg += text_array(arr);
-            //msg += Date.parse(data.formal_request.time[0]);
+            msg += text_array(arr)+" from "+from+" to "+to+". ";
+
             on_message(msg);
           }
         }
@@ -575,7 +669,8 @@ $(document).ready(function() {
   on_message(welcome_msg);
 
   //on_response(json1);
-  on_response(json2);
+  //on_response(json2);
+  //on_response(json6);
   //on_response(json3);
   //on_response(json4);
 

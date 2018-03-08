@@ -303,51 +303,81 @@ body{
   right:-320px;
   width:320px;
   height: 100vh;
-  background-color:#565656;
+  background-color:#efe8e8;
   margin:67px 0px 0px 0px;
   padding:0px 0px 0px 0px;
   box-sizing: border-box;
   z-index: 1;
-  opacity:0.95;
+  opacity:0.90;
   transition: all 0.5s;
-  color:white;
   overflow: scroll;
 }
 .notifications:after {
   content:'';
   display:block;
   padding-bottom:100px;
+  background-color:#efe8e8;
+  opacity:0.80;
 
 }
 .slide {
     right: 0;
 }
 .notify{
-  margin:0;
-  margin-top:7px;
-  padding:0px 25px 0px 0px;
-  float:right;
+  position:fixed;
+  top:18px;
+  right:35px;
+  color:white;
+  font-size:25px;
 }
 .notification{
   border-radius: 0;
   margin:0;
   background-color:white;
-  margin: 0px !important;
-  padding: 10px 15px;
+  margin: 5px 0px 5px 0px !important;
+  padding: 10px 15px 5px 15px;
   overflow-wrap: break-word;
   max-width:100%;
   width:100%;
   display:inline-block;
   opacity:0.95;
-}
-.odd{
-  background-color:#a5a5a5;
+  background-color: #efe8e8;
   color:black;
 }
-.even{
-  background-color:#565656;
-  color:white;
+.notification:after{
+  content: " ";
+  display:block;
+  padding:0px;
+  border-color:gray;
+  border-bottom-style: solid;
+  border-bottom-width:1px;
+  width:270px;
+  opacity:0.85;
+  margin:0 auto;
 }
+.notification:hover{
+  background:#565656;
+  color:white !important;
+}
+.unread {
+  -webkit-animation: notification_animation 0.8s infinite;  /* Safari 4+ */
+  -moz-animation: notification_animation 0.8s infinite;  /* Fx 5+ */
+  -o-animation: notification_animation 0.8s infinite;  /* Opera 12+ */
+  animation: notification_animation 0.8s infinite;  /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes notification_animation {
+  0%{
+    color:white;
+  }
+  50% {
+    color:#59af50;
+  }
+  100% {
+    color:white;
+  }
+}
+
 @media (min-width: 480px) {
   .message{
     font-size:13px;
