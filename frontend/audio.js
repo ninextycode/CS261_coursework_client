@@ -30,7 +30,7 @@ var recording = false;
           $('#send_button').hide();
           $('#audio_icon').show();
           audio_button.on("click",on_audio_click);
-          $(document).on("keydown",on_spacebar_press);
+          //$(document).on("keydown",on_spacebar_press);
           console.log('got media successfully');
       },
       _reason => {
@@ -104,7 +104,7 @@ var recording = false;
               mime_type: audioOptions.type,
               is_base64: true,
               content: to_base64(uint8Array),
-          });
+          },true);
       };
       fileReader.readAsArrayBuffer(blob);
 

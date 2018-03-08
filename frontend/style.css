@@ -1,12 +1,11 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+
 a {
   text-decoration: none;
+  color: inherit;
 }
 a:hover {
   text-decoration: none;
+  color: inherit;
 }
 
 body{
@@ -70,15 +69,15 @@ body{
   max-width:70%;
   display:inline-block;
   font-size:12px;
+  color:white;
 }
 
 .input{
  float:right;
  background-color:#59af50;
- color:white;
 }
 .output{
-  background-color:#E5E4E9;
+  background-color:#565656;
 }
 
 .news{
@@ -93,7 +92,15 @@ body{
   max-width:70%;
   display:inline-block;
   font-size:12px;
+  color:#565656;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
+.hidden_news{
+  display:none;
+}
+
 .button{
   position:absolute;
   right:0px;
@@ -146,6 +153,19 @@ body{
   animation: blinking 1.5s infinite;  /* IE 10+, Fx 29+ */
 }
 
+.social_media_panel {
+  display:none;
+  padding-top:40px;
+  margin: -30px 10px 10px 10px;
+  color:#565656;
+  background-color:white;
+  border: 1px solid;
+  border-color:#a5a5a5;
+
+}
+.social_media_panel:hover{
+  background-color:#f9f9f9;
+}
 
 @-webkit-keyframes blinking {
   0%{
@@ -163,15 +183,25 @@ body{
   display:none;
 }
 .dot{
-  color:#E5E4E9;
   margin-right: 3px;
   font-size:7px;
-  -webkit-animation: waiting 1.5s infinite;  /* Safari 4+ */
-  -moz-animation: waiting 1.5s infinite;  /* Fx 5+ */
-  -o-animation: waiting 1.5s infinite;  /* Opera 12+ */
-  animation: waiting 1.5s infinite;  /* IE 10+, Fx 29+ */
   animation-timing-function: linear;
 }
+.inputDot{
+  color:#59af50;
+  -webkit-animation: waitingInput 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: waitingInput 1.5s infinite;  /* Fx 5+ */
+  -o-animation: waitingInput 1.5s infinite;  /* Opera 12+ */
+  animation: waitingInput 1.5s infinite;  /* IE 10+, Fx 29+ */
+}
+.outputDot{
+  color:#565656;
+  -webkit-animation: waitingOutput 1.5s infinite;  /* Safari 4+ */
+  -moz-animation: waitingOutput 1.5s infinite;  /* Fx 5+ */
+  -o-animation: waitingOutput 1.5s infinite;  /* Opera 12+ */
+  animation: waitingOutput 1.5s infinite;  /* IE 10+, Fx 29+ */
+}
+
 
 #dot1 {
   animation-delay: 0.3s;
@@ -183,19 +213,104 @@ body{
   animation-delay: 0.9s;
 }
 
-@-webkit-keyframes waiting {
+@-webkit-keyframes waitingOutput {
   0%{
-    color:gray;
+    color:white;
   }
   100% {
-    color:#E5E4E9;
+    color:#565656;
   }
+}
+@-webkit-keyframes waitingInput {
+  0%{
+    color:white;
+  }
+  100% {
+    color:#59af50;
+  }
+}
+.drop_down_arrow{
+    cursor: pointer;
+  display:block;
+  width:fit-content;
+  text-align:center;
+  padding-bottom:0px;
+  margin:8px auto -13px auto;
+  font-size:20px;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+
+.expandable .drop_down_arrow:hover{
+  color:black;
+}
+.rotate{
+  transform: rotate(180deg);
+}
+.summary{
+  display:none;
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100vw;
+  height: 100vh;
+  margin-top:65px;
+  padding:30px 30px 0px 30px;
+  box-sizing: border-box;
+  z-index:1;
+  font-size: 12px;
+  color:white;
+  background-color:#565656;
+  opacity:0.95;
+  overflow: auto;
+}
+.summary:after {
+  content:'';
+  display:block;
+  padding-bottom: 100px;
+  margin-bottom:60px;
+
+}
+.news_title{
+  width:fit-content;
+  margin: 8px 0px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  cursor: pointer;
+}
+
+
+.summary_title{
+  text-align:center;
+  font-size:18px;
+}
+
+.summary_title a{
+  color:#00BFFF;
+}
+.summary_title a:hover{
+  color:#00FFFF;
+}
+
+
+.expandable:hover{
+  background-color:#7f7e7e;
+  cursor: pointer;
 }
 
 @media (min-width: 480px) {
   .message{
     font-size:13px;
-    margin:5px 20px;
+    margin-left:20px;
+    margin-right:20px;
+  }
+  .summary{
+    padding-left:60px;
+    padding-right:60px;
+    font-size:13px;
+  }
+  .summary_title{
+    font-size:20px;
   }
  }
 
@@ -203,7 +318,16 @@ body{
 @media (min-width: 768px) {
   .message{
     font-size:14px;
-    margin:5px 30px;
+    margin-left:30px;
+    margin-right:30px;
+  }
+  .summary{
+    padding-left: 90px;
+    padding-right:90px;
+    font-size:14px;
+  }
+  .summary_title{
+    font-size:22px;
   }
  }
 
@@ -211,7 +335,16 @@ body{
 @media (min-width: 992px) {
   .message{
     font-size:15px;
-    margin:5px 40px;
+    margin-left:40px;
+    margin-right:40px;
+  }
+  .summary{
+    padding-left:150px;
+    padding-right:150px;
+    font-size:15px;
+  }
+  .summary_title{
+    font-size:24px;
   }
  }
 
@@ -219,6 +352,15 @@ body{
 @media (min-width: 1200px) {
   .message{
     font-size:17px;
-    margin:5px 50px;
+    margin-left:50px;
+    margin-right:50px;
+  }
+  .summary{
+    padding-left:200px;
+    padding-right:200px;
+    font-size:17px;
+  }
+  .summary_title{
+    font-size:28px;
   }
  }
