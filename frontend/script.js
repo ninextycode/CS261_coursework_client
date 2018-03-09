@@ -283,13 +283,20 @@ $(document).ready(function() {
         if($('.notify').hasClass('unread')){
         $('.notify').toggleClass('unread');
     }
-
     });
 
 
-   $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
+    $(".notifications").on('click', '.notification',function(e){
+      $(this).remove();
+      e.stopPropagation();
+    });
+
+
+    $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
          e.stopPropagation();
     });
+
+
 
    $(".messages").on('click', '.news_title',function(e){
      var summary = $(this).next();
@@ -297,6 +304,7 @@ $(document).ready(function() {
        summary.show();
      }
    });
+
 
    $(".messages").on('click', '.summary',function(e){
       $(this).hide();
