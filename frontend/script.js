@@ -283,13 +283,20 @@ $(document).ready(function() {
         if($('.notify').hasClass('unread')){
         $('.notify').toggleClass('unread');
     }
-
     });
 
 
-   $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
+    $(".notifications").on('click', '.notification',function(e){
+      $(this).remove();
+      e.stopPropagation();
+    });
+
+
+    $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
          e.stopPropagation();
     });
+
+
 
    $(".messages").on('click', '.news_title',function(e){
      var summary = $(this).next();
@@ -297,6 +304,7 @@ $(document).ready(function() {
        summary.show();
      }
    });
+
 
    $(".messages").on('click', '.summary',function(e){
       $(this).hide();
@@ -421,13 +429,17 @@ $(document).ready(function() {
       message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
       $('#errors').prepend(message_div);
       */
-
-        var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
-        $(html).insertBefore('#input_waiting');
+        if(debug){
+          on_notification(message);
+        }else{
+          on_notification("There's an error in me.");
+          console.log("**ERROR** "+message);
+        }
+        //var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
+        //$(html).insertBefore('#input_waiting');
         //$('#responses').append(html);
         $('#responses').scrollTop($('#responses')[0].scrollHeight);
 
-        console.log("**ERROR** "+message);
       //}
   }
 
@@ -438,7 +450,7 @@ $(document).ready(function() {
       $('#responses').prepend(message_div);
       */
       console.log("**UNKNOWN TYPE**<br>"+JSON.stringify(message));
-      message = "Sorry I don't understand. May be you could try to ask another question?";
+      message = "Sorry I don't understand. May be you could ask another question?";
       var html = "<div class='message_wrapper'><div class='output message'>";
       html += message + "</div></div>";
       $(html).insertBefore('#input_waiting');
@@ -484,8 +496,7 @@ $(document).ready(function() {
       $('#output_waiting').hide();
   }
 
-  function on_notification(data){
-    var msg = data.data.body;
+  function on_notification(msg){
     if(!($('.notifications').hasClass('slide'))){
       $('.notify').addClass('unread');
     }
