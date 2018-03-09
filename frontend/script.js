@@ -232,41 +232,41 @@ $(document).ready(function() {
   var rotation = 0;
   $('#send_button').click(onSendButtonPressed);
 
-  function onSendButtonPressed(){
-      message = $('#message_area').val().trim();
-      if(message != null && message != ''){
-        $('#message_area').val('');
-        if(audio_setup){
-          $('#send_button').hide();
-          $('#audio_button').show();
-        }
-        $("#message_area").prop('rows',1);
-        on_my_message(message.replace("\n", "<br>"));
+    function onSendButtonPressed(){
+        message = $('#message_area').val().trim();
+            if(message != null && message != ''){
+                $('#message_area').val('');
+                    if(audio_setup){
+                        $('#send_button').hide();
+                        $('#audio_button').show();
+                    }
+                $("#message_area").prop('rows',1);
+            on_my_message(message.replace("\n", "<br>"));
         send_to_server({mime_type: text_mime, content: message});
-      }
-  }
-
-
-  $("#message_area").keydown(function(e){
-    // Enter was pressed without shift key
-    if (e.keyCode == 13){
-      if(!e.shiftKey){
-        e.preventDefault();
-        onSendButtonPressed();
-      }else{
-        if($("#message_area").prop('rows')<5){
-          $("#message_area").prop('rows',$("#message_area").prop('rows')+1);
         }
-      }
     }
-  });
 
 
-  $( window ).resize(function() {
-    $(".expandable").each(function(){
-      $(this).next().css('width',$(this).css('width'));
+    $("#message_area").keydown(function(e){
+    // Enter was pressed without shift key
+        if (e.keyCode == 13){
+            if(!e.shiftKey){
+                e.preventDefault();
+                onSendButtonPressed();
+            }else{
+                if($("#message_area").prop('rows')<5){
+                    $("#message_area").prop('rows',$("#message_area").prop('rows')+1);
+                }
+            }
+        }
     });
-  });
+
+
+    $( window ).resize(function() {
+        $(".expandable").each(function(){
+            $(this).next().css('width',$(this).css('width'));
+        });
+    });
 
     $(".messages").on('click', '.news',function(e){
     if($(this).find('.hidden_news').css('display') == 'none'){
@@ -293,17 +293,17 @@ $(document).ready(function() {
 
 
     $(".messages").on('click', '.news .news_title, .news .summary,.news .summary a',function(e){
-         e.stopPropagation();
+        e.stopPropagation();
     });
 
 
 
-   $(".messages").on('click', '.news_title',function(e){
-     var summary = $(this).next();
-     if(summary.css('display') == 'none'){
-       summary.show();
-     }
-   });
+    $(".messages").on('click', '.news_title',function(e){
+        var summary = $(this).next();
+        if(summary.css('display') == 'none'){
+            summary.show();
+        }
+    });
 
 
    $(".messages").on('click', '.summary',function(e){
@@ -630,38 +630,38 @@ $(document).ready(function() {
     });
   }
 
-  function generate_industry(data){
+function generate_industry(data){
     var indicators = data.formal_request.indicators;
     var companies = data.formal_request.tickers;
     indicators.forEach(function(indicator){
         if(indicator == "industry_average" || indicator == "price_change"){
-          var main_msg = '';
-          var sub_msg = [];
-          var arr = [];
-          if(indicator == "industry_average"){
-            main_msg = 'The average price of this industry is ';
-            main_msg += (data.unformatted_data.industry_average.average) + " GBX.";
-            companies.forEach(function(company){
-                var val = data.unformatted_data[indicator][company];
-                if (typeof val != 'undefined'){
-                    var msg = "The price of "+company+" is "+data.unformatted_data[indicator][company]+" GBX. ";
-                    sub_msg.push(msg);
-                }
-            });
+            var main_msg = '';
+            var sub_msg = [];
+            var arr = [];
+            if(indicator == "industry_average") {
+                main_msg = 'The average price of this industry is ';
+                main_msg += (data.unformatted_data.industry_average.average) + " GBX.";
+                companies.forEach(function(company){
+                    var val = data.unformatted_data[indicator][company];
+                    if (typeof val != 'undefined'){
+                        var msg = "The price of "+company+" is "+data.unformatted_data[indicator][company]+" GBX. ";
+                        sub_msg.push(msg);
+                    }
+                });
 
-          }else if(indicator == "price_change"){
-            var from = format_date(data.formal_request.time[0]);
-            var to = format_date(data.formal_request.time[1]);
-            main_msg = 'The price change of this industry from '+from+' to '+to+' is '+(data.unformatted_data.price_change.average*100).toFixed(2)+"%. ";
-            companies.forEach(function(company){
-                var change = (data.unformatted_data[indicator][company]*100).toFixed(2);
-                if(!isNaN(change)){
-                    var msg = "The price change of "+company+" is "+change+"%. ";
-                    sub_msg.push(msg);
-                }
-            });
-
-          }
+            }else if(indicator == "price_change"){
+                var from = format_date(data.formal_request.time[0]);
+                var to = format_date(data.formal_request.time[1]);
+                main_msg = 'The price change of this industry from '+from+' to '
+                    +to+' is '+(data.unformatted_data.price_change.average*100).toFixed(2)+"%. ";
+                companies.forEach(function(company){
+                    var change = (data.unformatted_data[indicator][company]*100).toFixed(2);
+                    if(!isNaN(change)){
+                        var msg = "The price change of "+company+" is "+change+"%. ";
+                        sub_msg.push(msg);
+                    }
+                });
+            }
 
             var html = "<div class='message_wrapper'><div class='output message expandable'>";
             html += main_msg;
@@ -679,10 +679,9 @@ $(document).ready(function() {
             $('#input_waiting').prev().find('.social_media_panel').css('width',$('#input_waiting').prev().find('.expandable').css('width'));
             console.log($('#responses')[0].scrollHeight);
             $('#responses').scrollTop($('#responses')[0].scrollHeight);
-
         }
     });
-  }
+}
 
   function send_to_server(message, isAudio = false) {
       if(isAudio){
