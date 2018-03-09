@@ -429,13 +429,17 @@ $(document).ready(function() {
       message_div = $('<div style='+exception_style+' class=\"row message\"></div>').text(message);
       $('#errors').prepend(message_div);
       */
-        on_notification("There's an error in me.");
+        if(debug){
+          on_notification(message);
+        }else{
+          on_notification("There's an error in me.");
+          console.log("**ERROR** "+message);
+        }
         //var html = "<div class='message_wrapper'><div class='output message'>There's an error in me.</div></div>";
         //$(html).insertBefore('#input_waiting');
         //$('#responses').append(html);
         $('#responses').scrollTop($('#responses')[0].scrollHeight);
 
-        console.log("**ERROR** "+message);
       //}
   }
 
