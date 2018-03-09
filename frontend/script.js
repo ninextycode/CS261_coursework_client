@@ -4,7 +4,7 @@ var url = address + ':' + port
 var notification_period_ms = 10000
 var audio_mime = 'audio/flac';
 var text_mime = 'text/plain';
-var debug = true;
+var debug = false;
 
 var welcome_msg = "Hello, what can I help you today?";
 /*
@@ -483,7 +483,7 @@ $(document).ready(function() {
             generate_industry(response.additional_data);
           }
       } else if(response.type === 'notification') {
-            on_notification(response);
+            on_notification(response.data.body);
       } else if(response.type === 'exception') {
           on_exception(response.data.body);
       }else if(response.type === 'list') {
@@ -572,15 +572,19 @@ $(document).ready(function() {
     }
   }
 
+  function format_date(date){
+    return date.replace("T"," ").slice(0,16);
+  }
   function generate_stock(data){
     var indicators = data.formal_request.indicators;
     var companies = data.formal_request.tickers;
     indicators.forEach(function(indicator){
       if(indicator == "price" || indicator == "price_change" ){
         var arr = [];
-        companies.forEach(function(company){
-          arr.push(data.unformatted_data[indicator][company]);
-        });
+        if(data.unformatted_data[indicator]===!null){
+            companies.forEach(function(company){
+                arr.push(data.unformatted_data[indicator][company]);
+            });
         if(indicator == "price"){
             arr.forEach(function(price, i){
               arr[i] = price +" GBX"
@@ -588,17 +592,17 @@ $(document).ready(function() {
             on_message('The price'+((companies.length>1)?'s':'')+' of '+text_array(companies)+((companies.length>1)?' are ':' is ')+text_array(arr)+'.');
         }else if(indicator == "price_change"){
           //var arr = JSON.parse(data.formal_request.time);
-          var from = data.formal_request.time[0];
-          var to = data.formal_request.time[1];
+          var from = format_date(data.formal_request.time[0]);
+          var to = format_date(data.formal_request.time[1]);
           if(arr.length == 1){
             var msg = 'The price of '+companies[0];
-            var change = parseFloat(arr[0]);
+            var change = (parseFloat(arr[0])*100).toFixed(2);
             if(change == 0){
               msg += " remains unchanged";
             }else if(change > 0){
-              msg += " increases by "+change+" GBX";
+              msg += " increases by "+change+"%";
             }else{
-              msg += " decreases by "+change+" GBX";
+              msg += " decreases by "+change+"%";
             }
             msg += " from "+from+" to "+to+". ";
             on_message(msg);
@@ -606,15 +610,21 @@ $(document).ready(function() {
             //FROM DATE
             var msg = 'The price changes of '+text_array(companies)+((companies.length>1)?' are ':' is ');
             arr.forEach(function(change, i){
-              if(parseFloat(change)>0){
-                arr[i] = "+"+change;
+              var val = (change*100).toFixed(2);
+              if(parseFloat(val)>0){
+                arr[i] = "+"+val+"%";
+              }else{
+                arr[i] = val +"%"
               }
-              arr[i] = arr[i] +" GBX"
+
             });
             msg += text_array(arr)+" from "+from+" to "+to+". ";
 
             on_message(msg);
           }
+         }
+        }else{
+            on_message("Sorry I cannot get the data for it.");
         }
       }
     });
@@ -624,12 +634,53 @@ $(document).ready(function() {
     var indicators = data.formal_request.indicators;
     var companies = data.formal_request.tickers;
     indicators.forEach(function(indicator){
-      if(indicator == "industry_average"){
-        var msg = 'The average price of the industry is ';
-        msg += data.unformatted_data.industry_average.average + " GBX.";
+        if(indicator == "industry_average" || indicator == "price_change"){
+          var main_msg = '';
+          var sub_msg = [];
+          var arr = [];
+          if(indicator == "industry_average"){
+            main_msg = 'The average price of this industry is ';
+            main_msg += (data.unformatted_data.industry_average.average) + " GBX.";
+            companies.forEach(function(company){
+                var val = data.unformatted_data[indicator][company];
+                if (typeof val != 'undefined'){
+                    var msg = "The price of "+company+" is "+data.unformatted_data[indicator][company]+" GBX. ";
+                    sub_msg.push(msg);
+                }
+            });
 
-        on_message(msg);
-      }
+          }else if(indicator == "price_change"){
+            var from = format_date(data.formal_request.time[0]);
+            var to = format_date(data.formal_request.time[1]);
+            main_msg = 'The price change of this industry from '+from+' to '+to+' is '+(data.unformatted_data.price_change.average*100).toFixed(2)+"%. ";
+            companies.forEach(function(company){
+                var change = (data.unformatted_data[indicator][company]*100).toFixed(2);
+                if(!isNaN(change)){
+                    var msg = "The price change of "+company+" is "+change+"%. ";
+                    sub_msg.push(msg);
+                }
+            });
+
+          }
+
+            var html = "<div class='message_wrapper'><div class='output message expandable'>";
+            html += main_msg;
+            html += "<div class='drop_down_arrow'><i class='fas fa-angle-down'></i></div>";
+            html += "</div><div class='message output social_media_panel'>";
+            html += "There "+(companies.length>1?"are":"is")+" "+companies.length+" "+(companies.length>1?"companies":"company")+" in this sector.";
+            html += "Below is the details of each individual company. <br><br>";
+            sub_msg.forEach(function(msg){
+                html += msg +"<br>";
+            });
+            html += "</div></div>";
+
+            $(html).insertBefore('#input_waiting');
+            //$('#responses').append(html);
+            $('#input_waiting').prev().find('.social_media_panel').css('width',$('#input_waiting').prev().find('.expandable').css('width'));
+            console.log($('#responses')[0].scrollHeight);
+            $('#responses').scrollTop($('#responses')[0].scrollHeight);
+
+        }
     });
   }
 

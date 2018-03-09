@@ -11,4 +11,4 @@ RUN pip3 install -r requirements.txt
 COPY . /client
 
 # CMD [ 'python3', 'main.py' ]
-ENTRYPOINT [ '/bin/bash' ]
+ENTRYPOINT [ "/bin/bash" ]
