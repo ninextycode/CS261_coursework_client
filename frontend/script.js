@@ -450,7 +450,7 @@ $(document).ready(function() {
       $('#responses').prepend(message_div);
       */
       console.log("**UNKNOWN TYPE**<br>"+JSON.stringify(message));
-      message = "Sorry I don't understand. May be you could try to ask another question?";
+      message = "Sorry I don't understand. May be you could ask another question?";
       var html = "<div class='message_wrapper'><div class='output message'>";
       html += message + "</div></div>";
       $(html).insertBefore('#input_waiting');
