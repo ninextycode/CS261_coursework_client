@@ -471,7 +471,7 @@ $(document).ready(function() {
             generate_industry(response.additional_data);
           }
       } else if(response.type === 'notification') {
-            on_notification(response.data.body);
+            on_notification(response);
       } else if(response.type === 'exception') {
           on_exception(response.data.body);
       }else if(response.type === 'list') {
