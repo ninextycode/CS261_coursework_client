@@ -115,7 +115,7 @@ class SocketClient(sn.Singleton):
 
     # client reconnects automatically by this function
     def on_disconnect(self, code, reason):
-        if code !=SocketClient.requested_close_code:
+        if code != SocketClient.requested_close_code:
             self.reset_connection()
 
     def connect(self):
@@ -134,16 +134,17 @@ class SocketClient(sn.Singleton):
 
     def try_connect_infinitely(self):
         with self.reconnect_lock:
-            if self.is_connected():
+            if self.ws4py_client.is_connected():
                 return
             self.ws4py_client.connect()
 
-        while not self.is_connected():
+        while not self.ws4py_client.is_connected():
             sc_logger.log('Reconnect to {} in {} seconds'.format(self.url, SocketClient.wait_reconnect_s))
             time.sleep(SocketClient.wait_reconnect_s)
 
             with self.reconnect_lock:
-                self.new_sending_thread()
+                self.close()
+                self.new_ws4py_instance()
                 self.ws4py_client.connect()
 
     def is_connected(self):
